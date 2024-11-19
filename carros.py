@@ -1,20 +1,13 @@
-fileCar = "carros_cadastrados.txt"
+fileName = "carros_cadastrados.txt"
 
-def converter_file_em_dicionario():
-    # Essa função é chamada sempre qie for necessário trazer os dados do .txt para dicionário
-    carros_cadastrados_do_arquivo = []
-
+def criar_file():
+    # Verificar se existe um arquivo.
     try:
-        # Convertendo de String para um dicionário
-        with open(fileCar, "r") as file:
-            for line in file:
-                carros_cadastrados_do_arquivo.append(eval(line)) 
-            return carros_cadastrados_do_arquivo
+        # Aqui o código tenta abrir o arquivo
+        open("carros_cadastrados.txt")
     except:
-        return
-    
-    
-    
+        # Caso não consiga abrir essa função vai rodar, cadastrando um novo arquivo com os 20 primeiros carros
+        cadastrar_os_carros_pioneiros()
 
 def cadastrar_os_carros_pioneiros():
     # Essa função vai cadastrar os 20 primeiros carros do .txt
@@ -43,23 +36,28 @@ def cadastrar_os_carros_pioneiros():
         {"nome": "BMW Serie 1", "preco": 92200, "ano": 2010, "estado": "mal estado"}
     ]
 
-    # Aqui pegamos os carros já cadastrados para uma checagem
-    carros_cadastrados = converter_file_em_dicionario()
+    # Adicionar os carros 1 a 1 no arquivo.
+    for carro in carros_pioneiros:
 
-    # Caso não hajam carros cadastrados, iremos cadastrar os carros pioneiros
-    if(type(carros_cadastrados) == None):
-        for carro in carros_pioneiros:
-            with open(fileCar, "a") as file:
-                file.write(str(carro) + "\n")
-    else:
-        if(len(carros_cadastrados) == 0):
-            for carro in carros_pioneiros:
-                with open(fileCar, "a") as file:
-                    file.write(str(carro) + "\n")
+        # Abre o arquivo e adiciona cada carro a ele.
+        with open(fileName, "a") as file:
+            file.write(str(carro) + "\n")    
 
+def converter_file_em_dicionario():
+    # Essa função é chamada sempre que for necessário trazer os dados do .txt para dicionário
+    
+    carros_cadastrados_do_arquivo = []
+
+    # Convertendo de String para um dicionário
+    with open(fileName, "r") as file:
+        for line in file:
+            carros_cadastrados_do_arquivo.append(eval(line)) 
+
+    return carros_cadastrados_do_arquivo
+
+# Mecânica de busca
 def buscar_carros(pesquisa):
-    # Essa função vai buscar os carros com base no valor que o usuário usou
-
+    # Essa função vai buscar os carros com base no valor que o usuário digitou
     carros_adequados = []
     
     try:
@@ -112,16 +110,18 @@ def buscar_carros(pesquisa):
             return
             # Retornar pro main / menu
 
+# Mecânica de cadastro
 def cadastrar_carros(nome: str, preco: float, ano: int, estado: str): 
     car = {'nome': nome, 'preco': preco, 'ano': ano, 'estado': estado}
 
-    with open(fileCar, "a") as file:
+    with open(fileName, "a") as file:
         file.write(str(car) + "\n") 
 
-    continue_loop = input("Deseja continuar (s / n): ").lower()
+    print("Carro cadastrado com sucesso!")
 
-    return continue_loop
+    main() # Usando o main aqui, mas podemos botar uma condição pra voltar para se o usuário quiser... ou voltar pro Menu de cadastro...
 
+# Mecânica do menu principal
 def menu():
     print("================ Bem vindo! ================")
     print("[0] - [\U0001F50E Buscar Carro ]")
@@ -134,14 +134,16 @@ def menu():
 
 def main():
 
-    cadastrar_os_carros_pioneiros() # Aqui o programa cadastra os primeiros 20 carros
+    criar_file() 
     
+    # Aqui pegamos o número que o usuário digitou para saber o que fazer adiante
     number = menu()
     
     match number:
         case 0:
             # buscar carro
             pesquisa = input("Um valor máximo ou uma string: ")
+
             carros_adequados = buscar_carros(pesquisa)
 
             if(len(carros_adequados) == 0):
@@ -151,14 +153,21 @@ def main():
                     print(f"Nome: {carro['nome']}, Preço: {carro['preco']}, Ano: {carro['ano']}, Estado: {carro['estado']}" + "\n")
         case 1:
             # cadastrar um novo carro
-            manter_loop = "s"
 
-            while(manter_loop == "s"):
-                nomeUser = input("Qual o nome do carro: ")
-                preco = float(input("Qual o preço do carro: "))
-                ano = int(input("Qual o ano do carro: "))
-                estado = input("Qual o estado do carro(novo, seminovo, conservado, mal estado)").lower()
-                manter_loop = cadastrar_carros(nomeUser, preco, ano, estado)
+            # PODIAMOS FAZER UM MENUZINHO TANTO PRA PARTE DE CADASTRAR QUANTO PRA BUSCAR UM CARRO
+            try:
+                carro_nome = input("Qual o nome do carro: ")
+                carro_preco = float(input("Qual o preço do carro: "))
+                carro_ano = int(input("Qual o ano do carro: "))
+                carro_estado = input("Qual o estado atual do carro(novo, seminovo, conservado, mal estado): ").lower()
+
+                cadastrar_carros(carro_nome, carro_preco, carro_ano, carro_estado)
+
+            except:
+                print("Algo deu errado...")
+                print("Voltando ao menu")
+                # Botar o time.sleep pra dar uma carregada antes de voltar pro menu
+                main()
             
 main()
 
