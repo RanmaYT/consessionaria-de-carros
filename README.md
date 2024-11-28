@@ -3,7 +3,7 @@
 Este é um sistema em Python para gerenciar informações sobre carros. Ele permite o cadastro, busca e exibição de veículos salvos em um arquivo de texto. Ideal para quem precisa de um programa simples e eficiente para organizar informações sobre veículos.
 
 ---
-> Creators: Demétrio Coutinho ([@Demicouto](https://github.com/Demicouto)) e Guilherme Venancio([@RanmaYT](https://github.com/RanmaYT))
+> Creators: Demétrio Coutinho ([@Demicouto](https://github.com/Demicouto)) e Guilherme Venancio ([@RanmaYT](https://github.com/RanmaYT))
 ---
 
 ## ✨ Funcionalidades  
@@ -40,8 +40,8 @@ Este é um sistema em Python para gerenciar informações sobre carros. Ele perm
 - **Python 3.x** instalado.  
 - Bibliotecas padrão do Python:  
   - `os` – Para manipulação do terminal.  
-  - `time` – Para temporizadores (delays).   
-
+  - `time` – Para temporizadores (delays).
+  - 
 ---
 
 ## 🚀 Como Usar  
