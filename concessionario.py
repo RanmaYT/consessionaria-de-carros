@@ -51,8 +51,8 @@ def returnDictOfFile():
 
     with open(fileName, "r") as file:
         for line in file:
-            # For each line, he get the elements in that line, split and strip them,
-            # save them as a dict in a local variable, and append this variable to a array of dict
+            # For each line, he get the elements in that line, split and strip them.
+            # save them as a dict in a local variable, and append this variable to a array of dict.
             line = line.strip()
             lineElements = line.split(",")
             car = {'nome': lineElements[0], 'preco': float(lineElements[1]), 'ano': int(lineElements[2]), 'estado': lineElements[3].strip()}
@@ -192,10 +192,10 @@ def main():
                         continue
                 
                 case 1:
-                    #  Regist cars system
+                    #  Regist cars system.
                     os.system("cls")
                     try:
-                        # Get the user's car information
+                        # Get the user's car information.
                         carName = input("Qual o nome do carro: ")
                         carPrice = float(input("Qual o preço do carro: "))
                         carYear = int(input("Qual o ano do carro: "))
